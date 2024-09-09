@@ -32,6 +32,31 @@ const NavigationBar = () => {
             </a>
           </MenubarMenu>
           <MenubarMenu>
+            <a className="px-2" href="/bike-manage">
+              Bike Management
+            </a>
+          </MenubarMenu>
+          <MenubarMenu>
+            <a className="px-2" href="/user-manage">
+              User Management
+            </a>
+          </MenubarMenu>
+          <MenubarMenu>
+            <a className="px-2" href="/coupon-manage">
+              Coupons
+            </a>
+          </MenubarMenu>
+          <MenubarMenu>
+            <a className="px-2" href="/my-rentals">
+              My Rentals
+            </a>
+          </MenubarMenu>
+          <MenubarMenu>
+            <a className="px-2" href="/rentals">
+              Rentals
+            </a>
+          </MenubarMenu>
+          <MenubarMenu>
             <a className="px-2" href="/">
               About Us
             </a>

@@ -8,6 +8,7 @@ import { IoMailOpenOutline } from "react-icons/io5";
 import { FaMobileAlt } from "react-icons/fa";
 
 import "@/styles/discount.css";
+import { Button } from "@/components/ui/button";
 
 const Home = () => {
   return (
@@ -62,11 +63,12 @@ const Home = () => {
         <div className="discount rounded-md">
           <div className="bg-[rgba(37,93,42,0.7)] py-24 rounded-md">
             <h2 className="scroll-m-20 text-bgclr text-5xl italic font-semibold tracking-tight mb-5">
-              20% OFF
+              Huge Discount Using Coupon Code
             </h2>
-            <p className="text-2xl text-bgclr">
-              Use "20JB" code to get 20% discount of your every bike rent.
+            <p className="text-2xl text-bgclr mb-3">
+              Use Coupon code to get upto 30% discount of your bike rent.
             </p>
+            <Button variant="outline">Spin Your Luck</Button>
           </div>
         </div>
       </div>
