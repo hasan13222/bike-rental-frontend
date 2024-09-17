@@ -16,7 +16,7 @@ const NavigationBar = () => {
     <>
       <div className="container border-b border-gray-200 py-6 flex justify-between items-center navigation__bar">
         <div className="logo">
-          <img className="w-28 object-contain" src="/logo.png" alt="logo" />
+          <img onClick={() => navigate('/')} className="w-28 object-contain cursor-pointer" src="/logo.png" alt="logo" />
         </div>
 
         {/* menu items */}
