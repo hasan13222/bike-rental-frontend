@@ -14,11 +14,20 @@ const authApi = baseApi.injectEndpoints({
         url: "/api/auth/login",
         method: "POST",
         body: payload,
-        credentials: 'include'
-      }),
-      
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }),      
     }),
+    checkLogin: builder.query({
+      query: () => ({
+        url: "/api/auth/check-login",
+        method: "GET",
+        credentials: 'include',
+      })
+    })
   }),
 });
 
-export const { useSignupUserMutation, useLoginUserMutation } = authApi;
+export const { useSignupUserMutation, useLoginUserMutation, useCheckLoginQuery } = authApi;
