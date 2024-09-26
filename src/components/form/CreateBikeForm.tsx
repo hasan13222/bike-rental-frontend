@@ -11,18 +11,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Input } from "../ui/input";
-import {
-  useGetSingleBikeQuery,
-  useUpdateBikeMutation,
-} from "@/redux/api/bike/bikeApi";
+import { useCreateBikeMutation } from "@/redux/api/bike/bikeApi";
 // import { useUploadImageMutation } from "@/redux/api/imageUploadApi";
 import { CustomError } from "@/types/errorType";
 import { toast } from "@/hooks/use-toast";
 import { useCheckLoginQuery } from "@/redux/api/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks";
-import { changeUpdateBikeModal } from "@/redux/features/bikeSlice";
+import { changeBikeModal } from "@/redux/features/bikeSlice";
 
 const formSchema = z.object({
   name: z.string(),
@@ -35,34 +32,31 @@ const formSchema = z.object({
   image: z.string().optional(),
 });
 
-const EditBike = ({ bikeId }: any) => {
+const CreateBikeForm = () => {
   const dispatch = useAppDispatch();
   const { data: userData } = useCheckLoginQuery(undefined);
   const bikeImageFileRef = useRef<HTMLInputElement>(null);
 
-  const { data: singleBike } = useGetSingleBikeQuery(bikeId);
-
-  const [updateBike, { isLoading, isError, error }] =
-    useUpdateBikeMutation(undefined);
+  const [createBike, { isLoading, isError, error }] =
+    useCreateBikeMutation(undefined);
 
   // const [uploadImage, { isLoading: imageUpLoading }] =
   //   useUploadImageMutation(undefined);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: singleBike?.data?.name + "",
-      brand: singleBike?.data?.brand + "",
-      description: singleBike?.data?.description + "",
-      cc: singleBike?.data?.cc + "",
-      year: singleBike?.data?.year + "",
-      model: singleBike?.data?.model + "",
-      pricePerHour: singleBike?.data?.pricePerHour + "",
+      name: "",
+      brand: "",
+      description: "",
+      cc: "",
+      year: "",
+      model: "",
+      pricePerHour: "",
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(bikeId);
     let newBike = {
       ...values,
       pricePerHour: Number(values.pricePerHour),
@@ -83,54 +77,30 @@ const EditBike = ({ bikeId }: any) => {
             ...newBike,
             image: data.data.data.display_url,
           };
-          const updatedBike = await updateBike({
-            bikeId,
+          const createdBike = await createBike({
             newBike,
             token: userData.data.token,
           });
-          if (updatedBike?.data?.success) {
-            toast({ description: "Updated Bike successfully" });
+          if (createdBike.data.success) {
+            toast({ description: "Created Bike successfully" });
           }
-          dispatch(changeUpdateBikeModal("close"));
+          dispatch(changeBikeModal("close"));
         })
         .catch(async () => {
-          const updatedBike = await updateBike({
-            bikeId,
+          const createdBike = await createBike({
             newBike,
             token: userData.data.token,
           });
-          if (updatedBike?.data?.success) {
-            toast({ description: "Updated Bike successfully" });
+          if (createdBike.data.success) {
+            toast({ description: "Created Bike successfully" });
           }
-          dispatch(changeUpdateBikeModal("close"));
+          dispatch(changeBikeModal("close"));
         });
     }
   }
 
-  useEffect(() => {
-    if (singleBike?.data) {
-      form.reset({
-        name: singleBike.data.name + "",
-        brand: singleBike.data.brand + "",
-        description: singleBike.data.description + "",
-        cc: singleBike.data.cc + "",
-        year: singleBike.data.year + "",
-        model: singleBike.data.model + "",
-        pricePerHour: singleBike.data.pricePerHour + "",
-      });
-    }
-  }, [singleBike, form]);
   return (
     <>
-    {isLoading && (
-        <button type="button" className="bg-primary" disabled>
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-          Loading...
-        </button>
-      )}
-      {isError && (
-        <p className="text-red-500">{(error as CustomError)?.data?.message}</p>
-      )}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <div className="flex flex-col">
@@ -240,9 +210,17 @@ const EditBike = ({ bikeId }: any) => {
         </form>
       </Form>
 
-      
+      {isLoading && (
+        <button type="button" className="bg-primary" disabled>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+          Loading...
+        </button>
+      )}
+      {isError && (
+        <p className="text-red-500">{(error as CustomError)?.data?.message}</p>
+      )}
     </>
   );
 };
 
-export default EditBike;
+export default CreateBikeForm;

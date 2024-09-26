@@ -17,6 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "../ui/input";
+import { useGetBikesQuery } from "@/redux/api/bike/bikeApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { setShowBikes } from "@/redux/features/bikeSlice";
 
 const formSchema = z.object({
   brand: z.string(),
@@ -25,6 +29,8 @@ const formSchema = z.object({
 });
 
 const BikeFilterForm = () => {
+  const {  data } = useGetBikesQuery(undefined);
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,7 +42,13 @@ const BikeFilterForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const filterData = data?.data?.filter((item:any) => {
+      const brandVal = !values.brand || item.brand.toLowerCase() === values.brand.toLowerCase();
+      const modelVal = !values.model || item.model.toLowerCase() === values.model.toLowerCase();
+      const availableVal = !values.available || item.isAvailable.toString() === values.available;
+      return brandVal && modelVal && availableVal;
+    })
+    dispatch(setShowBikes(filterData));
   }
 
   return (
@@ -49,43 +61,22 @@ const BikeFilterForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Brand</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Brand" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="yamaha">Yamaha</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormControl>
+                  <Input placeholder="brand" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="model"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Model</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Model" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="2012">2012</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormControl>
+                  <Input placeholder="model" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -96,20 +87,19 @@ const BikeFilterForm = () => {
             name="available"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Brand</FormLabel>
+                <FormLabel>Availablity</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger defaultValue="available">
                       <SelectValue placeholder="Select Availability" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="2">All</SelectItem>
-                    <SelectItem value="0">Not Available</SelectItem>
-                    <SelectItem value="1">Available</SelectItem>
+                    <SelectItem value="false">Not Available</SelectItem>
+                    <SelectItem value="true">Available</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

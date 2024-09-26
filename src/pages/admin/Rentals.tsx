@@ -7,23 +7,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "@/hooks/use-toast";
+import { useCheckLoginQuery } from "@/redux/api/auth/authApi";
+import { useGetAllRentalsQuery, useReturnBikeMutation } from "@/redux/api/booking/bookingApi";
+import { CustomError } from "@/types/errorType";
 
-const invoices = [
-  {
-    bike_name: "INV001",
-    start_time: "Paid",
-    return_time: "$250.00",
-    total_cost: "Credit Card",
-  },
-  {
-    bike_name: "INV002",
-    start_time: "Pending",
-    return_time: "$150.00",
-    total_cost: "PayPal",
-  },
-];
 
 const Rentals = () => {
+  const {data:userData} = useCheckLoginQuery(undefined);
+  const { data, isLoading, isError, error } = useGetAllRentalsQuery(userData?.data?.token);
+  const [returnBike, {isLoading: returnLoading, isError: isReturnError, error: returnError}] = useReturnBikeMutation(userData?.data?.token);
+
+
+  const handleReturn = async (bookingId: string) => {
+    const returnedBike = await returnBike({bookingId, token: userData?.data?.token})
+    if (returnedBike?.data?.data?.success){
+      toast({description: returnedBike?.data?.data?.message})
+    }
+  }
   return (
     <>
       <div className="container">
@@ -31,6 +32,24 @@ const Rentals = () => {
           OnGoing Rides
         </h2>
       </div>
+      {isLoading && (
+        <button type="button" className="bg-primary" disabled>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+          Loading...
+        </button>
+      )}
+      {isError && (
+        <div className="container"><p className="text-red-500">{(error as CustomError)?.data?.message}</p></div>
+      )}
+      {returnLoading && (
+        <button type="button" className="bg-primary" disabled>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+          Loading...
+        </button>
+      )}
+      {isReturnError && (
+        <div className="container"><p className="text-red-500">{(returnError as CustomError)?.data?.message}</p></div>
+      )}
       <div className="container py-8 mx-auto flex">
         <div className="border rounded-md">
           <Table>
@@ -54,20 +73,24 @@ const Rentals = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {invoices.map((invoice) => (
-                <TableRow key={invoice.bike_name}>
-                  <TableCell className="font-medium">
-                    {invoice.bike_name}
-                  </TableCell>
-                  <TableCell>{invoice.start_time}</TableCell>
-                  <TableCell>{invoice.return_time}</TableCell>
-                  <TableCell>{invoice.total_cost}</TableCell>
-                  <TableCell className="flex gap-2">
-                    <Button className="bg-secondary text-txtclr">Calculate</Button>
-                    <Button className="bg-accent">End Ride</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {data?.data?.map((item:any) => {
+                if(item.bikeId?._id){
+                  return (
+                    <TableRow key={item._id}>
+                    <TableCell className="font-medium">
+                      {item.bikeId?.name}
+                    </TableCell>
+                    <TableCell>{item.startTime}</TableCell>
+                    <TableCell>{item.returnTime}</TableCell>
+                    <TableCell>{item.totalCost}</TableCell>
+                    {!item.isReturned && <TableCell>
+                      <Button onClick={() => handleReturn(item._id)}>Calculate</Button>
+                    </TableCell>}
+                    
+                  </TableRow>
+                  )
+                }
+              })}
             </TableBody>
           </Table>
         </div>

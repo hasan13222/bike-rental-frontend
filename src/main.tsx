@@ -5,11 +5,17 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/Routes.tsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.ts";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <Elements stripe={stripePromise}>
+        <RouterProvider router={router} />
+      </Elements>
     </Provider>
   </StrictMode>
 );

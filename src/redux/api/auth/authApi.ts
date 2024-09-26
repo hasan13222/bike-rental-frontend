@@ -18,16 +18,25 @@ const authApi = baseApi.injectEndpoints({
         headers: {
           'Content-Type': 'application/json'
         }
-      }),      
+      }), 
+      invalidatesTags: ["checkLogin"]     
     }),
     checkLogin: builder.query({
       query: () => ({
         url: "/api/auth/check-login",
         method: "GET",
         credentials: 'include',
-      })
+      }),
+      providesTags: ["checkLogin"]
+    }),
+    logout: builder.query({
+      query: () => ({
+        url: "/api/auth/logout",
+        method: "GET",
+        credentials: 'include',
+      }),
     })
   }),
 });
 
-export const { useSignupUserMutation, useLoginUserMutation, useCheckLoginQuery } = authApi;
+export const { useSignupUserMutation, useLoginUserMutation, useCheckLoginQuery, useLazyLogoutQuery } = authApi;

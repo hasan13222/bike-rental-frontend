@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "product",
+  name: "auth",
   initialState,
   reducers: {
     setUser: (state, action) => {

@@ -10,65 +10,62 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Input } from "../ui/input";
+// import { useUploadImageMutation } from "@/redux/api/imageUploadApi";
 import { CustomError } from "@/types/errorType";
 import { toast } from "@/hooks/use-toast";
-import { useUpdateProfileMutation } from "@/redux/api/user/userApi";
+import { useCheckLoginQuery } from "@/redux/api/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { useCreateCouponMutation } from "@/redux/api/coupon/couponApi";
+import { changeCouponModal } from "@/redux/features/couponSlice";
 
 const formSchema = z.object({
-  name: z.string(),
-  phone: z.string(),
-  address: z.string(),
+  code: z.string(),
+  discount_percent: z.string(),
 });
 
-const EditProfileForm = ({ userData, token, setEditMode }: any) => {
-  const [updateProfile, { isLoading, isError, error }] =
-    useUpdateProfileMutation(token);
+const CreateCouponForm = () => {
+  const dispatch = useAppDispatch();
+  const { data: userData } = useCheckLoginQuery(undefined);
 
+  const [createCoupon, { isLoading, isError, error }] =
+    useCreateCouponMutation(undefined);
+
+  // const [uploadImage, { isLoading: imageUpLoading }] =
+  //   useUploadImageMutation(undefined);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: userData?.name,
-      phone: userData?.phone,
-      address: userData?.address,
+      code: "",
+      discount_percent: "",
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const updatedProfile = await updateProfile({ token, updateInfo: values });
-    if (updatedProfile?.data?.success) {
-      toast({ description: "Profile updated successfully" });
+    const createdCoupon = await createCoupon({
+      newCoupon: values,
+      token: userData.data.token,
+    });
+    if (createdCoupon.data.success) {
+      toast({ description: "Created Coupon successfully" });
     }
-    setEditMode(false);
+    dispatch(changeCouponModal("close"));
   }
 
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          
           <FormField
             control={form.control}
-            name="name"
+            name="code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Name</FormLabel>
+                <FormLabel>Code</FormLabel>
                 <FormControl>
-                  <Input placeholder="Full Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem style={{ marginTop: 10 }}>
-                <FormLabel>Your Phone Number</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your Phone Number" {...field} />
+                  <Input placeholder="code" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,23 +73,24 @@ const EditProfileForm = ({ userData, token, setEditMode }: any) => {
           />
           <FormField
             control={form.control}
-            name="address"
+            name="discount_percent"
             render={({ field }) => (
-              <FormItem style={{ marginTop: 10 }}>
-                <FormLabel>Your Address</FormLabel>
+              <FormItem>
+                <FormLabel>Discount Percentage</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your Address" {...field} />
+                  <Input type="number" placeholder="discount percent" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button style={{ marginTop: 20 }} type="submit">
+          <Button className="" style={{ marginTop: 20 }} type="submit">
             Submit
           </Button>
         </form>
       </Form>
+
       {isLoading && (
         <button type="button" className="bg-primary" disabled>
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
@@ -106,4 +104,4 @@ const EditProfileForm = ({ userData, token, setEditMode }: any) => {
   );
 };
 
-export default EditProfileForm;
+export default CreateCouponForm;

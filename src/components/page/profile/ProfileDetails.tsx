@@ -1,11 +1,22 @@
-const ProfileDetails = () => {
+
+
+const ProfileDetails = ({userData}: any) => {
   return (
     <>
+    
       <ul>
-        <li className="text-lg mb-3"><span className="font-medium">Name:</span> Md. Jamil Hasan</li>
-        <li className="text-lg mb-3"><span className="font-medium">Email:</span> demo@email.com</li>
-        <li className="text-lg mb-3"><span className="font-medium">Phone:</span> 01XXX254125</li>
-        <li className="text-lg"><span className="font-medium">Address:</span> 32/2 Shewrapara, Mirpur, Dhaka-1207.</li>
+        <li className="text-lg mb-3">
+          <span className="font-medium">Name:</span> {userData?.name}
+        </li>
+        <li className="text-lg mb-3">
+          <span className="font-medium">Email:</span> {userData?.email}
+        </li>
+        <li className="text-lg mb-3">
+          <span className="font-medium">Phone:</span> {userData?.phone}
+        </li>
+        <li className="text-lg">
+          <span className="font-medium">Address:</span> {userData?.address}
+        </li>
       </ul>
     </>
   );

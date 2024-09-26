@@ -1,14 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
 import authReducer from './features/authSlice'
+import bikeReducer from './features/bikeSlice'
+import compareReducer from './features/compareSlice'
+import couponReducer from './features/couponSlice'
+import { imageUploadApi } from "./api/imageUploadApi";
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
-    authReducer: authReducer
+    [imageUploadApi.reducerPath]: imageUploadApi.reducer,
+    authReducer: authReducer,
+    bikeReducer: bikeReducer,
+    compareReducer: compareReducer,
+    couponReducer: couponReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware).concat(imageUploadApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

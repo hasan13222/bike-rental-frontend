@@ -27,7 +27,7 @@ const formSchema = z.object({
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const [signupUser, { isLoading, isError, error, isSuccess }] =
+  const [signupUser, { isLoading, isError, error }] =
     useSignupUserMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,9 +41,9 @@ const SignupForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signupUser(values);
-    if (isSuccess) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const signupData = await signupUser(values);
+    if (signupData?.data.success) {
       navigate("/login");
     }
   }
