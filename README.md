@@ -1,50 +1,29 @@
-# React + TypeScript + Vite
+## Bike Rental Service
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### [Live URL](https://bike-rental-frontend-eight.vercel.app/) 
 
-Currently, two official plugins are available:
+### Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-  Seamless user experience with authentication, bike management, booking, and advanced features.
+-  Filter system to filter bike based on brand, model, availability, etc.
+-  Booking bike with advance payment
+-  Update profile info
+-  Admin can add, update, delete bike
+-  Admins can view a list of rental details
+-  Admin can create and manage all coupon codes
+-  Coupons will be available for users to apply them for a discount on their rentals.
+-  Users to compare multiple bikes, highlighting key features.
 
-## Expanding the ESLint configuration
+### Technology used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+    React, Redux, Shadcn, Tailwind
 
-- Configure the top-level `parserOptions` property like this:
+### Follow the below instructions to run the application in your local machine
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- First clone the github repository or download the zip file
+- run "npm install" command. Thus you can get all the required dependencies required for the application
+- prepare backend and run as per backend
+- In Product form in place of imgbb api key, replace your api key with
+- then run "npm run dev" command to run the application as development mode in your machine
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Thanks for following the instructions.
