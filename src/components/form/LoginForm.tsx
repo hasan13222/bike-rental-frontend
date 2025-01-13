@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useLoginUserMutation } from "@/redux/api/auth/authApi";
 import { useNavigate } from "react-router-dom";
 import { CustomError } from "@/types/errorType";
+import { useEffect, useMemo, useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -21,14 +22,30 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-  const [loginUser, { isLoading, isError, error }] =
-    useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
+  const [dfEmail, setDfEmail] = useState("");
+  const [dfPassword, setDfPassword] = useState("");
+
+  const defaultValues = useMemo(() => {
+    return {
+      email: dfEmail,
+      password: dfPassword,
+    };
+  }, [dfEmail, dfPassword]);
+
+  function adminHandler() {
+    setDfEmail("jbike@example.com");
+    setDfPassword("jbike123");
+  }
+
+  function userHandler() {
+    setDfEmail("user@example.com");
+    setDfPassword("user123");
+  }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues,
   });
 
   const navigate = useNavigate();
@@ -39,6 +56,10 @@ const LoginForm = () => {
       navigate("/");
     }
   }
+
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [form, defaultValues]);
 
   return (
     <>
@@ -77,6 +98,15 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
+          <div className="flex gap-5">
+            <Button onClick={adminHandler} type="button" className="bg-accent">
+              Admin
+            </Button>
+            <Button onClick={userHandler} type="button" className="bg-accent">
+              User
+            </Button>
+          </div>
+
           <Button className="" style={{ marginTop: 20 }} type="submit">
             Submit
           </Button>

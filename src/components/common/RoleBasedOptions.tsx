@@ -17,7 +17,8 @@ const RoleBasedOptions = () => {
   const handleLogout = async() => {
     const loggedOut = await logout(undefined);
     if (loggedOut.data.success){
-      toast({description: loggedOut.data.message})
+      toast({description: loggedOut.data.message});
+      navigate('/login');
     }
   }
   return (
