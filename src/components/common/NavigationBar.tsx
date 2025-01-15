@@ -49,44 +49,7 @@ const NavigationBar = () => {
               Bikes
             </a>
           </MenubarMenu>
-          {userData?.data?.role === "admin" && (
-            <MenubarMenu>
-              <a className="px-2 lg:mb-0 mb-2" href="/bike-manage">
-                Bike Management
-              </a>
-            </MenubarMenu>
-          )}
-          {userData?.data?.role === "admin" && (
-            <MenubarMenu>
-              <a className="px-2 lg:mb-0 mb-2" href="/user-manage">
-                User Management
-              </a>
-            </MenubarMenu>
-          )}
-
-          {userData?.data?.role === "admin" && (
-            <MenubarMenu>
-              <a className="px-2 lg:mb-0 mb-2" href="/coupon-manage">
-                Coupons
-              </a>
-            </MenubarMenu>
-          )}
-
-          {userData?.data?.role === "user" && (
-            <MenubarMenu>
-              <a className="px-2 lg:mb-0 mb-2" href="/my-rentals">
-                My Rentals
-              </a>
-            </MenubarMenu>
-          )}
-
-          {userData?.data?.role === "admin" && (
-            <MenubarMenu>
-              <a className="px-2 lg:mb-0 mb-2" href="/rentals">
-                Rentals
-              </a>
-            </MenubarMenu>
-          )}
+          
 
           <MenubarMenu>
             <a className="px-2" href="/about-us">

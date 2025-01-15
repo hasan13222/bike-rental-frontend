@@ -15,6 +15,8 @@ import ProtectedPage from "@/pages/ProtectedPage";
 import AdminProtected from "@/pages/AdminProtected";
 import AboutUs from "@/pages/common/AboutUs";
 import NotFound from "@/pages/common/NotFound";
+import Dashboard from "@/pages/protected/Dashboard";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -45,7 +47,9 @@ const router = createBrowserRouter([
         path: "/my-profile",
         element: (
           <ProtectedPage>
-            <Profile />
+            <DashboardLayout>
+              <Profile />
+            </DashboardLayout>
           </ProtectedPage>
         ),
       },
@@ -61,7 +65,19 @@ const router = createBrowserRouter([
         path: "/my-rentals",
         element: (
           <ProtectedPage>
-            <MyRentals />
+            <DashboardLayout>
+              <MyRentals />
+            </DashboardLayout>
+          </ProtectedPage>
+        ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <ProtectedPage>
+            <DashboardLayout>
+              <Dashboard />
+            </DashboardLayout>
           </ProtectedPage>
         ),
       },
@@ -69,7 +85,9 @@ const router = createBrowserRouter([
         path: "/rentals",
         element: (
           <AdminProtected>
-            <Rentals />
+            <DashboardLayout>
+              <Rentals />
+            </DashboardLayout>
           </AdminProtected>
         ),
       },
@@ -77,7 +95,9 @@ const router = createBrowserRouter([
         path: "/bike-manage",
         element: (
           <AdminProtected>
-            <BikeManage />
+            <DashboardLayout>
+              <BikeManage />
+            </DashboardLayout>
           </AdminProtected>
         ),
       },
@@ -85,7 +105,9 @@ const router = createBrowserRouter([
         path: "/user-manage",
         element: (
           <AdminProtected>
-            <UserManage />
+            <DashboardLayout>
+              <UserManage />
+            </DashboardLayout>
           </AdminProtected>
         ),
       },
@@ -93,7 +115,9 @@ const router = createBrowserRouter([
         path: "/coupon-manage",
         element: (
           <AdminProtected>
-            <CouponManage />
+            <DashboardLayout>
+              <CouponManage />
+            </DashboardLayout>
           </AdminProtected>
         ),
       },
