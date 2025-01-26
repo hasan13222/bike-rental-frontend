@@ -26,22 +26,28 @@ const BikeCard = ({ bikeData, compareBtn=false }: any) => {
   };
   return (
     <>
-      <div className="p-5 rounded-md relative group border border-lightAccent cursor-pointer">
+      <div className="p-5 rounded-md relative group border shadow-md hover:scale-[1.05] transition-transform border-lightAccent cursor-pointer">
         <div className="mb-1">
           <img
-            className="w-full h-[250px] object-cover rounded-md"
+            className="w-full h-[180px] object-cover rounded-md"
             src={bikeData?.image}
             alt=""
           />
         </div>
-        <div className="flex items-center justify-between">
-          <h4 className="scroll-m-20 text-base font-semibold tracking-tight">
-            {bikeData?.brand} {bikeData?.model} {bikeData?.year}
+        <div className="pb-3 mb-3 border-b">
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight">
+            {bikeData?.name}
           </h4>
-          <p>${bikeData?.pricePerHour}/hr</p>
+          <p className="text-sm">{bikeData?.description.substr(0, 40)}...</p>
         </div>
         <div className="flex items-center justify-between">
-          <h4 className="scroll-m-20 text-base font-semibold tracking-tight">
+          <h4 className="scroll-m-20 text-base font-medium tracking-tight">
+            {bikeData?.brand} {bikeData?.model} {bikeData?.year}
+          </h4>
+          <p className="font-bold text-lg">${bikeData?.pricePerHour}/hr</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <h4 className="scroll-m-20 text-base font-medium tracking-tight">
             150 CC
           </h4>
           <p>{bikeData?.isAvailable ? "Available" : "Not Available"}</p>

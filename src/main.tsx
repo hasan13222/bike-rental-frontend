@@ -10,6 +10,11 @@ import { Elements } from "@stripe/react-stripe-js";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_PK);
 
+const removeLoader = () => {
+  const loader = document.getElementById("loading");
+  if (loader) loader.remove();
+};
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
@@ -19,3 +24,6 @@ createRoot(document.getElementById("root")!).render(
     </Provider>
   </StrictMode>
 );
+
+// Call the removeLoader function after rendering
+removeLoader();

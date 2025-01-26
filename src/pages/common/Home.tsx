@@ -1,3 +1,4 @@
+import ScrollAnimation from "react-animate-on-scroll";
 import ContactForm from "@/components/form/ContactForm";
 import Banner from "@/components/page/home/Banner";
 import BikeCard from "@/components/page/home/BikeCard";
@@ -26,7 +27,10 @@ import { useNavigate } from "react-router-dom";
 import { useGetCouponsQuery } from "@/redux/api/coupon/couponApi";
 import { toast } from "@/hooks/use-toast";
 import { useCheckLoginQuery } from "@/redux/api/auth/authApi";
-import { useFixDiscountMutation, useGetUserRentalsQuery } from "@/redux/api/booking/bookingApi";
+import {
+  useFixDiscountMutation,
+  useGetUserRentalsQuery,
+} from "@/redux/api/booking/bookingApi";
 
 const Home = () => {
   const { data } = useGetBikesQuery(undefined);
@@ -39,30 +43,31 @@ const Home = () => {
   >([]);
 
   const { data: userData } = useCheckLoginQuery(undefined);
-  const { data: myRentals } = useGetUserRentalsQuery(
-    userData?.data?.token
-  );
+  const { data: myRentals } = useGetUserRentalsQuery(userData?.data?.token);
 
-  const [fixDiscount] = useFixDiscountMutation(userData)
+  const [fixDiscount] = useFixDiscountMutation(userData);
 
   const navigate = useNavigate();
   const handleSpinClick = async () => {
-    const activeRental = myRentals?.data?.find((item:any) => {
-      return (item.status === "unpaid" && !item?.discount_percent);
+    const activeRental = myRentals?.data?.find((item: any) => {
+      return item.status === "unpaid" && !item?.discount_percent;
     });
-    if(!activeRental){
-      toast({description: "You have no active ride"});
+    if (!activeRental) {
+      toast({ description: "You have no active ride" });
       return;
     }
-    if(mustSpin){
-      toast({description: "You have already spun"});
+    if (mustSpin) {
+      toast({ description: "You have already spun" });
     }
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
       setPrizeNumber(newPrizeNumber);
-      
-      await fixDiscount({bookingId: activeRental._id, discount: wheelData[newPrizeNumber].option});
-      setMustSpin(!mustSpin)
+
+      await fixDiscount({
+        bookingId: activeRental._id,
+        discount: wheelData[newPrizeNumber].option,
+      });
+      setMustSpin(!mustSpin);
     }
   };
 
@@ -85,24 +90,27 @@ const Home = () => {
       <Banner />
 
       {/* featured section */}
-      <div className="container py-8">
-        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          Our Latest Bike
-        </h2>
-        <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
-          {data?.data?.map((item: any, i: number) => {
-            if (i < 8) {
-              return (
-                <>
-                  <BikeCard  bikeData={item} />
-                </>
-              );
-            }
-          })}
+      <ScrollAnimation animateIn="fadeIn">
+        <div className="container py-8">
+          <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            Our Latest Bike
+          </h2>
+          <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
+            {data?.data?.map((item: any, i: number) => {
+              if (i < 8) {
+                return (
+                  <>
+                    <BikeCard bikeData={item} />
+                  </>
+                );
+              }
+            })}
+          </div>
         </div>
-      </div>
+      </ScrollAnimation>
 
       {/* testimonial section */}
+      <ScrollAnimation animateIn="fadeIn">
       <div className="container py-8 mx-auto">
         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Reviews
@@ -111,8 +119,10 @@ const Home = () => {
           <CarouselSlider />
         </div>
       </div>
+      </ScrollAnimation>
 
       {/* why choose us */}
+      <ScrollAnimation animateIn="fadeIn">
       <div className="container py-8">
         <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
           Why Choose Us
@@ -130,6 +140,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      </ScrollAnimation>
 
       {/* promotion */}
       <AlertDialog
@@ -147,7 +158,9 @@ const Home = () => {
                 size={22}
                 onClick={() => {
                   navigator.clipboard.writeText(wheelData[prizeNumber]?.code);
-                  toast({description: "Your Coupon Code copied to clipboard"})
+                  toast({
+                    description: "Your Coupon Code copied to clipboard",
+                  });
                 }}
               />{" "}
               when you pay
