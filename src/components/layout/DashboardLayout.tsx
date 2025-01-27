@@ -71,7 +71,7 @@ const DashboardLayout = ({ children }: any) => {
         </div>
         
 
-        <div className="sidebar min-w-[240px] hidden sm:block bg-slate-400 rounded-md p-3">
+        <div className="sidebar min-w-[240px] hidden sm:block bg-dark_primary rounded-md p-3">
           <ul className="">
             <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
               <NavLink className="w-full inline-block p-2" to={`/dashboard`}>
