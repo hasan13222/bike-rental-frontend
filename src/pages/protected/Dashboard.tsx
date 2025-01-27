@@ -9,6 +9,7 @@ import { useGetCouponsQuery } from "@/redux/api/coupon/couponApi";
 import { useGetAllUserQuery } from "@/redux/api/user/userApi";
 import { useEffect, useState } from "react";
 import AutoSizer from "react-virtualized-auto-sizer";
+import CountUp from "react-countup";
 import {
   LineChart,
   Line,
@@ -42,7 +43,7 @@ const Dashboard = () => {
       return {accDate: key, "No Of Customer": dateWiseData[key].length}
     });
     setCustomerChartData(customerChartArray);
-  }, [userData, users])
+  }, [users])
   return (
     <>
       <h2 className="scroll-m-20 py-2 text-3xl font-semibold tracking-tight first:mt-0">
@@ -85,7 +86,7 @@ const Dashboard = () => {
                 Total Available Bike
               </span>
               <span className="text-lg font-bold leading-none sm:text-3xl">
-                {bikes?.data?.length}
+                <CountUp end={bikes?.data?.length}/>
               </span>
             </button>
             {userData?.data?.role === "user" && (
@@ -94,7 +95,7 @@ const Dashboard = () => {
                   Total Rides
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {myRentals?.data?.length}
+                  <CountUp end={myRentals?.data?.length}/>
                 </span>
               </button>
             )}
@@ -104,7 +105,7 @@ const Dashboard = () => {
                   Total User
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {users?.data?.length}
+                  <CountUp end={users?.data?.length}/>
                 </span>
               </button>
             )}
@@ -115,7 +116,7 @@ const Dashboard = () => {
                   Total Coupon
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {coupons?.data?.length}
+                  <CountUp end={coupons?.data?.length}/>
                 </span>
               </button>
             )}
@@ -126,7 +127,7 @@ const Dashboard = () => {
                   Total Rentals
                 </span>
                 <span className="text-lg font-bold leading-none sm:text-3xl">
-                  {rentals?.data?.length}
+                  <CountUp end={rentals?.data?.length}/>
                 </span>
               </button>
             )}
