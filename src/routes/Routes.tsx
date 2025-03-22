@@ -17,6 +17,10 @@ import AboutUs from "@/pages/common/AboutUs";
 import NotFound from "@/pages/common/NotFound";
 import Dashboard from "@/pages/protected/Dashboard";
 import DashboardLayout from "@/components/layout/DashboardLayout";
+import MyRides from "@/pages/user/MyRides";
+import Team from "@/pages/common/Team";
+import ContactUs from "@/pages/common/ContactUs";
+import IncompleteRides from "@/pages/user/IncompleteRides";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "/about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "/team",
+        element: <Team />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
       {
         path: "*",
@@ -67,6 +79,26 @@ const router = createBrowserRouter([
           <ProtectedPage>
             <DashboardLayout>
               <MyRentals />
+            </DashboardLayout>
+          </ProtectedPage>
+        ),
+      },
+      {
+        path: "/my-rides",
+        element: (
+          <ProtectedPage>
+            <DashboardLayout>
+              <MyRides />
+            </DashboardLayout>
+          </ProtectedPage>
+        ),
+      },
+      {
+        path: "/my-dues",
+        element: (
+          <ProtectedPage>
+            <DashboardLayout>
+              <IncompleteRides />
             </DashboardLayout>
           </ProtectedPage>
         ),

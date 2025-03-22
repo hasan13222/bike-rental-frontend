@@ -1,8 +1,9 @@
-import BannerSearch from "@/components/form/BannerSearch";
 import { Button } from "@/components/ui/button";
 import "@/styles/banner.css";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="banner container-fluid flex">
@@ -15,8 +16,8 @@ const Banner = () => {
               Ready to explore? Find the perfect bike and start your adventure
               today!
             </p>
-            <BannerSearch/>
-            <Button className="bg-primary text-bgclr">Explore Our Collection</Button>
+            {/* <BannerSearch/> */}
+            <Button onClick={() => navigate('/bikes')} className="bg-primary text-bgclr">Explore Our Collection</Button>
           </div>
         </div>
       </div>

@@ -1,12 +1,8 @@
 import ScrollAnimation from "react-animate-on-scroll";
-import ContactForm from "@/components/form/ContactForm";
 import Banner from "@/components/page/home/Banner";
 import BikeCard from "@/components/page/home/BikeCard";
 import { CarouselSlider } from "@/components/page/home/CarouselSlider";
 import ChooseUsItem from "@/components/page/home/ChooseUsItem";
-import { MdOutlineLocationSearching } from "react-icons/md";
-import { IoMailOpenOutline } from "react-icons/io5";
-import { FaMobileAlt } from "react-icons/fa";
 import { GoCopy } from "react-icons/go";
 import {
   AlertDialog,
@@ -33,7 +29,8 @@ import {
 } from "@/redux/api/booking/bookingApi";
 
 const Home = () => {
-  const { data } = useGetBikesQuery(undefined);
+  const { data } = useGetBikesQuery({limit: 4});
+  const {data: featuredbikes} = useGetBikesQuery({limit:4, sort: "-cc"})
   const { data: coupons } = useGetCouponsQuery(undefined);
   const [alertOpen, setAlertOpen] = useState("");
   const [mustSpin, setMustSpin] = useState(false);
@@ -89,12 +86,12 @@ const Home = () => {
     <>
       <Banner />
 
-      {/* featured section */}
-      <ScrollAnimation animateIn="fadeIn">
-        <div className="container py-8">
-          <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-            Our Latest Bike
-          </h2>
+      {/* latest bike section */}
+      <div className="container py-8">
+        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          Our Latest Bikes
+        </h2>
+        <ScrollAnimation animateIn="fadeIn">
           <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
             {data?.data?.map((item: any, i: number) => {
               if (i < 8) {
@@ -106,41 +103,8 @@ const Home = () => {
               }
             })}
           </div>
-        </div>
-      </ScrollAnimation>
-
-      {/* testimonial section */}
-      <ScrollAnimation animateIn="fadeIn">
-      <div className="container py-8 mx-auto">
-        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          Reviews
-        </h2>
-        <div className="px-14 mt-8">
-          <CarouselSlider />
-        </div>
+        </ScrollAnimation>
       </div>
-      </ScrollAnimation>
-
-      {/* why choose us */}
-      <ScrollAnimation animateIn="fadeIn">
-      <div className="container py-8">
-        <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
-          Why Choose Us
-        </h2>
-        <div className="chooseUs flex items-end">
-          <ul className="chooseUs__items pl-8">
-            <ChooseUsItem />
-          </ul>
-          <div className="img_wrapper -ml-5">
-            <img
-              className="max-h-[320px] object-contain"
-              src="/customer.png"
-              alt="smiling customer"
-            />
-          </div>
-        </div>
-      </div>
-      </ScrollAnimation>
 
       {/* promotion */}
       <AlertDialog
@@ -204,43 +168,59 @@ const Home = () => {
         </div>
       </div>
 
-      {/* contact us section */}
-      <div className="container py-8 mx-auto">
+      {/* featured section */}
+      <div className="container py-8">
         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-          Contact Us
+          Our Featured Bikes
         </h2>
-        <div className="mt-1 flex flex-wrap gap-8">
-          <div className="contact__address">
-            <p>
-              We’d love to hear from you! Whether you have questions about our
-              bike rentals, need help planning your next ride, or just want to
-              say hi, we’re here for you. Feel free to reach out to us through
-              any of the following ways. For quick inquiries, just fill out the
-              contact form below, and we’ll get back to you as soon as possible.
-            </p>
-            <ul className="mt-2">
-              <li className="flex items-center gap-2 mb-2">
-                <MdOutlineLocationSearching className="text-xl text-primary" />
-                <p className="text-base font-medium">
-                  Level-2, Road 345, Rasulpur, Patuakhali, Dhaka, Bangladesh.
-                </p>
-              </li>
-              <li className="flex items-center gap-2 mb-2">
-                <IoMailOpenOutline className="text-xl text-primary" />
-                <p className="text-base font-medium">BikeRental@email.com</p>
-              </li>
-              <li className="flex items-center gap-2 mb-2">
-                <FaMobileAlt className="text-xl text-primary" />
-                <p className="text-base font-medium">01XXX859587</p>
-              </li>
-            </ul>
+        <ScrollAnimation animateIn="fadeIn">
+          <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
+            {featuredbikes?.data?.map((item: any, i: number) => {
+              if (i < 8) {
+                return (
+                  <>
+                    <BikeCard bikeData={item} />
+                  </>
+                );
+              }
+            })}
           </div>
+        </ScrollAnimation>
+      </div>
 
-          <div className="min-w-[500px]">
-            <ContactForm />
+      {/* why choose us */}
+      <ScrollAnimation animateIn="fadeIn">
+        <div className="container py-8">
+          <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
+            Our Services
+          </h2>
+          <div className="chooseUs flex items-end">
+            <ul className="chooseUs__items pl-8">
+              <ChooseUsItem />
+            </ul>
+            <div className="img_wrapper -ml-5">
+              <img
+                className="max-h-[320px] object-contain"
+                src="/customer.png"
+                alt="smiling customer"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
+
+      {/* testimonial section */}
+      <ScrollAnimation animateIn="fadeIn">
+        <div className="container py-8 mx-auto">
+          <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            Reviews
+          </h2>
+          <div className="px-14 mt-8">
+            <CarouselSlider />
+          </div>
+        </div>
+      </ScrollAnimation>
+
     </>
   );
 };

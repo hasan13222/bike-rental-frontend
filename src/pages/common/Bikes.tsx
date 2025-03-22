@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { setShowBikes } from "@/redux/features/bikeSlice";
+import BikesPagination from "@/components/page/bikes/BikesPagination";
 const Bikes = () => {
   const { isLoading, data, isError, error } = useGetBikesQuery(undefined);
   const {showBikes} = useAppSelector(state => state.bikeReducer);
@@ -135,7 +136,7 @@ const Bikes = () => {
         </div>
 
         <div className="pagination mt-7">
-          {/* <BikesPagination /> */}
+          <BikesPagination />
         </div>
       </div>
     </>

@@ -25,15 +25,15 @@ const RoleBasedOptions = () => {
     <>
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem onClick={() => navigate("/my-profile")}>
+      <DropdownMenuItem className="cursor-pointer" onClick={() => navigate("/my-profile")}>
         <User className="mr-2 h-4 w-4" />
         <span>Profile</span>
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+      <DropdownMenuItem className="cursor-pointer" onClick={() => navigate("/dashboard")}>
         <User className="mr-2 h-4 w-4" />
         <span>Dashboard</span>
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={handleLogout}>
+      <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
         <LogOut className="mr-2 h-4 w-4" />
         <span>Log out</span>
       </DropdownMenuItem>

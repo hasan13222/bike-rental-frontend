@@ -17,6 +17,9 @@ const couponApi = baseApi.injectEndpoints({
         url: `/api/coupons`,
         method: "POST",
         body: payload.newCoupon,
+        headers: {
+          Authorization: `Bearer ${payload.token}`,
+        },
       }),
       invalidatesTags: ["coupons"],
     }),

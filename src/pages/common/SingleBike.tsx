@@ -43,8 +43,8 @@ const SingleBike = () => {
   const navigate = useNavigate();
 
   const handleBooking = async () => {
-    if(!data?.data?.isAvailable) {
-      toast({description: "Bike is not available"})
+    if (!data?.data?.isAvailable) {
+      toast({ description: "Bike is not available" })
       return;
     }
     if (!userData?.success) {
@@ -96,11 +96,11 @@ const SingleBike = () => {
               description: "Your payment is completed successfully",
             });
             setPopover("close");
-            const rideStarted = await startRide({data: {bikeId, startTime: new Date()}, token: userData?.data?.token})
+            const rideStarted = await startRide({ data: { bikeId, startTime: new Date() }, token: userData?.data?.token })
             if (rideStarted?.data?.success) {
-              navigate("/my-rentals");  
+              navigate("/my-rentals");
             }
-            
+
           }
         })
         .catch((err) => {
@@ -116,25 +116,49 @@ const SingleBike = () => {
   };
   return (
     <>
-      <div className="container mx-auto px-3 py-8">
-        <div className="singleBike container mx-auto px-3 py-8 flex items-center gap-8">
+      <div className="container mx-auto py-8">
+        <div className="singleBike mx-auto py-8 flex items-center gap-8">
           <div className="img_wrapper">
             <img
-              className="w-[550px] h-[400px] object-contain"
+              className="w-[550px] object-contain"
               src={data?.data?.image}
               alt=""
             />
           </div>
-          <div className="text_wrapper flex flex-col gap-3">
-            <h3 className="font-semibold uppercase">Yamaha</h3>
+          <div className="text_wrapper flex flex-col gap-2">
 
-            <p className="text-accentColor font-semibold">
-              {data?.data?.isAvailable}
-            </p>
+            <h2 className="font-bold text-xl">{data?.data?.name}</h2>
             <p>{data?.data?.description}</p>
-            <p className="price font-bold text-lg">
-              ${data?.data?.pricePerHour}
-            </p>
+            <h3 className="font-bold uppercase">Specification</h3>
+            <div className="flex gap-5">
+              <p className="text-accentColor w-32 font-semibold">
+                Brand: {data?.data?.brand}
+              </p>
+              <p className="text-accentColor w-32 font-semibold">
+                Model: {data?.data?.model}
+              </p>
+            </div>
+
+            <div className="flex gap-5">
+              <p className="text-accentColor w-32 font-semibold">
+                Year: {data?.data?.year}
+              </p>
+              <p className="text-accentColor w-32 font-semibold">
+                CC: {data?.data?.cc}
+              </p>
+            </div>
+
+            <div className="flex gap-5">
+
+              <p className="text-accentColor w-32 font-semibold">
+                Availability?: {data?.data?.isAvailable ? "Yes" : "No"}
+              </p>
+              <p className="text-accentColor w-32 font-semibold">
+                Rate: ${data?.data?.pricePerHour}/hr
+              </p>
+            </div>
+
+
             <div className="addToCart flex gap-4 items-center">
               <Popover
                 onOpenChange={(open) => setPopover(open + "")}
@@ -142,7 +166,7 @@ const SingleBike = () => {
               >
                 <PopoverTrigger asChild>
                   <Button className="bg-primary" variant="outline">
-                    Book Now
+                    Start Ride Now
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-80">
@@ -166,8 +190,9 @@ const SingleBike = () => {
                       />
                     </div>
                     <div className="grid gap-2">
-                      <p>Please pay 100tk in advance to confirm your riding.</p>
+                      <p>Please pay $10 as booking money.</p>
                       <Button onClick={handleBooking}>Pay</Button>
+                      <p>Test Card No. 4242424242424242</p>
                     </div>
                   </div>
                 </PopoverContent>
@@ -178,33 +203,33 @@ const SingleBike = () => {
       </div>
       {isLoading && (
         <div className="container">
-            <button type="button" className="bg-primary" disabled>
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-              Loading...
-            </button>
-          </div>
+          <button type="button" className="bg-primary" disabled>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+            Loading...
+          </button>
+        </div>
       )}
       {stripeLoading && (
         <div className="container">
-            <button type="button" className="bg-primary" disabled>
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-              Loading...
-            </button>
-          </div>
+          <button type="button" className="bg-primary" disabled>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+            Loading...
+          </button>
+        </div>
       )}
       {isSingleBikeLoading && (
         <div className="container">
-            <button type="button" className="bg-primary" disabled>
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-              Loading...
-            </button>
-          </div>
+          <button type="button" className="bg-primary" disabled>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+            Loading...
+          </button>
+        </div>
       )}
       {isSingleBikeError && (
         <div className="container">
-        <p className="text-red-500">
-          {(singleBikeError as CustomError)?.data?.message}
-        </p>
+          <p className="text-red-500">
+            {(singleBikeError as CustomError)?.data?.message}
+          </p>
         </div>
       )}
       {rideLoading && (
@@ -215,9 +240,9 @@ const SingleBike = () => {
       )}
       {isRideError && (
         <div className="container">
-        <p className="text-red-500">
-          {(rideError as CustomError)?.data?.message}
-        </p>
+          <p className="text-red-500">
+            {(rideError as CustomError)?.data?.message}
+          </p>
         </div>
       )}
     </>

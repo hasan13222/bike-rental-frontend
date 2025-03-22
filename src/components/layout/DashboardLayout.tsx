@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/drawer";
 import { useCheckLoginQuery } from "@/redux/api/auth/authApi";
 import { Button } from "../ui/button";
+import '@/styles/dashboard.css'
 
 const DashboardLayout = ({ children }: any) => {
   
@@ -22,47 +23,62 @@ const DashboardLayout = ({ children }: any) => {
           </DrawerTrigger>
           <DrawerContent>
             <ul className=" ">
-              <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
+              <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
                 <NavLink className="w-full inline-block p-2" to={`dashboard`}>
                   Dashboard
                 </NavLink>
               </li>
               {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/bike-manage">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/bike-manage">
                 Bike Management
-              </a>
+              </NavLink>
             </li>
           )}
           {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/user-manage">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/user-manage">
                 User Management
-              </a>
+              </NavLink>
             </li>
           )}
 
           {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/coupon-manage">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/coupon-manage">
                 Coupons
-              </a>
+              </NavLink>
             </li>
           )}
 
           {userData?.data?.role === "user" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/my-rentals">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/my-rentals">
                 My Rentals
-              </a>
+              </NavLink>
+            </li>
+          )}
+          
+          {userData?.data?.role === "user" && (
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/my-dues">
+                Incomplete Rides
+              </NavLink>
+            </li>
+          )}
+          {userData?.data?.role === "user" && (
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/my-rides">
+                My Rides
+              </NavLink>
             </li>
           )}
 
           {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/rentals">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/rentals">
                 Rentals
-              </a>
+              </NavLink>
             </li>
           )}
             </ul>
@@ -73,47 +89,61 @@ const DashboardLayout = ({ children }: any) => {
 
         <div className="sidebar min-w-[240px] hidden sm:block bg-dark_primary rounded-md p-3">
           <ul className="">
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
               <NavLink className="w-full inline-block p-2" to={`/dashboard`}>
                 Dashboard
               </NavLink>
             </li>
             {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/bike-manage">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/bike-manage">
                 Bike Management
-              </a>
+              </NavLink>
             </li>
           )}
           {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/user-manage">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/user-manage">
                 User Management
-              </a>
+              </NavLink>
             </li>
           )}
 
           {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/coupon-manage">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/coupon-manage">
                 Coupons
-              </a>
+              </NavLink>
             </li>
           )}
 
           {userData?.data?.role === "user" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/my-rentals">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/my-rentals">
                 My Rentals
-              </a>
+              </NavLink>
+            </li>
+          )}
+          {userData?.data?.role === "user" && (
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/my-dues">
+                Incomplete Rides
+              </NavLink>
+            </li>
+          )}
+          {userData?.data?.role === "user" && (
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/my-rides">
+                My Rides
+              </NavLink>
             </li>
           )}
 
           {userData?.data?.role === "admin" && (
-            <li className="bg-white mb-2 rounded-md hover:bg-slate-50">
-              <a className="w-full inline-block p-2" href="/rentals">
+            <li className="dark:bg-black bg-white mb-2 rounded-md hover:bg-slate-50">
+              <NavLink className="w-full inline-block p-2" to="/rentals">
                 Rentals
-              </a>
+              </NavLink>
             </li>
           )}
           </ul>

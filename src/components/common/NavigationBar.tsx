@@ -56,6 +56,16 @@ const NavigationBar = () => {
               About Us
             </a>
           </MenubarMenu>
+          <MenubarMenu>
+            <a className="px-2" href="/team">
+              Our Team
+            </a>
+          </MenubarMenu>
+          <MenubarMenu>
+            <a className="px-2" href="/contact">
+              Contact Us
+            </a>
+          </MenubarMenu>
         </Menubar>
       </>
     );

@@ -6,19 +6,21 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Testimony from "./Testimony";
+import { reviews } from "@/constants/reviews";
 
 export function CarouselSlider() {
   return (
     <Carousel
       opts={{
-        align: "start",
+        align: "center",
         loop: true,
       }}
       className="w-full"
     >
-      <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <Testimony key={index}/>
+      <CarouselContent className="">
+
+        {reviews?.map((item) => (
+          <Testimony item={item} key={item?.name} />
         ))}
       </CarouselContent>
       <CarouselPrevious />

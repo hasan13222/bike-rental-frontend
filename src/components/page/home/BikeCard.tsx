@@ -38,7 +38,7 @@ const BikeCard = ({ bikeData, compareBtn=false }: any) => {
           <h4 className="scroll-m-20 text-lg font-semibold tracking-tight">
             {bikeData?.name}
           </h4>
-          <p className="text-sm">{bikeData?.description.substr(0, 40)}...</p>
+          <p className="text-sm">{bikeData?.description.substr(0, 35)}...</p>
         </div>
         <div className="flex items-center justify-between">
           <h4 className="scroll-m-20 text-base font-medium tracking-tight">
@@ -48,7 +48,7 @@ const BikeCard = ({ bikeData, compareBtn=false }: any) => {
         </div>
         <div className="flex items-center justify-between">
           <h4 className="scroll-m-20 text-base font-medium tracking-tight">
-            150 CC
+            {bikeData?.cc}
           </h4>
           <p>{bikeData?.isAvailable ? "Available" : "Not Available"}</p>
         </div>

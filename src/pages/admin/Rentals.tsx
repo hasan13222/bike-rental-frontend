@@ -82,7 +82,7 @@ const Rentals = () => {
                     </TableCell>
                     <TableCell>{item.startTime}</TableCell>
                     <TableCell>{item.returnTime}</TableCell>
-                    <TableCell>{item.totalCost}</TableCell>
+                    <TableCell>${item.totalCost}</TableCell>
                     {!item.isReturned && <TableCell>
                       <Button onClick={() => handleReturn(item._id)}>Calculate</Button>
                     </TableCell>}

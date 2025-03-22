@@ -150,8 +150,7 @@ const MyRentals = () => {
         <h2 className="scroll-m-20 py-2 text-3xl font-semibold tracking-tight first:mt-0">
           My Rentals
         </h2>
-      </div>
-      {isLoading && (
+        {isLoading && (
         <button type="button" className="bg-primary" disabled>
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
           Loading...
@@ -179,7 +178,9 @@ const MyRentals = () => {
           </p>
         </div>
       )}
-      <div className="container py-8 mx-auto flex">
+      </div>
+      
+      <div className="container py-2 mx-auto flex">
         <Tabs defaultValue="unpaid" className="w-[800px]">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="unpaid">UnPaid</TabsTrigger>
@@ -217,7 +218,7 @@ const MyRentals = () => {
                           </TableCell>
                           <TableCell>{item.startTime}</TableCell>
                           <TableCell>{item.returnTime}</TableCell>
-                          <TableCell>{item.totalCost}</TableCell>
+                          <TableCell>${item.totalCost}</TableCell>
                           <TableCell>
                             <Button
                               onClick={() =>
@@ -268,7 +269,7 @@ const MyRentals = () => {
                           </TableCell>
                           <TableCell>{item.startTime}</TableCell>
                           <TableCell>{item.returnTime}</TableCell>
-                          <TableCell>{item.totalCost}</TableCell>
+                          <TableCell>${item.totalCost}</TableCell>
                         </TableRow>
                       );
                     }

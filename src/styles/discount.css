@@ -1,5 +1,6 @@
 .discount{
-    background: url('/discount.jpg') no-repeat;
+    background: url('/offer.jpg') no-repeat;
     background-size: cover;
+    background-position: bottom right;
 
 }
