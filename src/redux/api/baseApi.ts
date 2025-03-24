@@ -6,6 +6,6 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://bike-rental-service-three.vercel.app",
   }),
-  tagTypes: ["bikes", "userProfile", "users", "checkLogin", "userRentals", "allRentals", "coupons"],
+  tagTypes: ["bikes", "userProfile", "users", "checkLogin", "userRentals", "allRentals", "coupons", "singleBike"],
   endpoints: () => ({}),
 });

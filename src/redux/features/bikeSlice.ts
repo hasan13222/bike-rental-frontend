@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface TBikeState {
+  createBikeModalOpen: string;
+  updateBikeModalOpen: string;
+  showBikes: Record<string, any>[];
+  page: number;
+}
+const initialState: TBikeState = {
   createBikeModalOpen:"",
   updateBikeModalOpen:"",
-  showBikes: []
+  showBikes: [],
+  page: 1
 };
 
 const bikeSlice = createSlice({
@@ -18,9 +25,12 @@ const bikeSlice = createSlice({
     },
     setShowBikes: (state, action) => {
       state.showBikes = action.payload;
+    },
+    setPage: (state, action) => {
+      state.page = action.payload
     }
   },
 });
 
-export const {changeBikeModal, changeUpdateBikeModal, setShowBikes} = bikeSlice.actions;
+export const {changeBikeModal, changeUpdateBikeModal, setShowBikes, setPage} = bikeSlice.actions;
 export default bikeSlice.reducer;

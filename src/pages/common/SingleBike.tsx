@@ -158,8 +158,7 @@ const SingleBike = () => {
               </p>
             </div>
 
-
-            <div className="addToCart flex gap-4 items-center">
+            {userData?.data?.role !== "admin" && <div className="addToCart flex gap-4 items-center">
               <Popover
                 onOpenChange={(open) => setPopover(open + "")}
                 open={popover === "close" ? false : undefined}
@@ -197,7 +196,8 @@ const SingleBike = () => {
                   </div>
                 </PopoverContent>
               </Popover>
-            </div>
+            </div>}
+            
           </div>
         </div>
       </div>

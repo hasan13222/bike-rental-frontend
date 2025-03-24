@@ -26,12 +26,13 @@ import { setShowBikes } from "@/redux/features/bikeSlice";
 import BikesPagination from "@/components/page/bikes/BikesPagination";
 const Bikes = () => {
   const { isLoading, data, isError, error } = useGetBikesQuery(undefined);
-  const {showBikes} = useAppSelector(state => state.bikeReducer);
+  const { showBikes } = useAppSelector(state => state.bikeReducer);
   const dispatch = useAppDispatch();
   const [alertOpen, setAlertOpen] = useState("");
   const [compare, setCompare] = useState(false);
 
   const compareBikes = useAppSelector((state) => state.compareReducer);
+  const { page } = useAppSelector(state => state.bikeReducer);
 
   if (compareBikes.length === 1) {
     toast({ description: "Add One More Bike to compare" });
@@ -81,43 +82,43 @@ const Bikes = () => {
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogDescription>
-                <div className="border rounded-md">
-                  <Table className="border">
-                    <TableHeader className="">
-                      <TableRow>
-                        <TableHead className="bg-primary text-white rounded-ss-md">
-                          {compareBikes[0].name}
-                        </TableHead>
-                        <TableHead className="bg-primary text-white rounded-tr-md">
-                          {compareBikes[1].name}
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>
-                          {compareBikes[0].brand}{" "}
-                          {compareBikes[0].year}
-                        </TableCell>
-                        <TableCell>
-                          {compareBikes[1].brand}{" "}  
-                          {compareBikes[1].year}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          {compareBikes[0].cc} CC
-                        </TableCell>
-                        <TableCell>{compareBikes[1].cc} CC</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          {compareBikes[0].pricePerHour}/hr
-                        </TableCell>
-                        <TableCell>{compareBikes[1].pricePerHour}/hr</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                  <div className="border rounded-md">
+                    <Table className="border">
+                      <TableHeader className="">
+                        <TableRow>
+                          <TableHead className="bg-primary text-white rounded-ss-md">
+                            {compareBikes[0].name}
+                          </TableHead>
+                          <TableHead className="bg-primary text-white rounded-tr-md">
+                            {compareBikes[1].name}
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>
+                            {compareBikes[0].brand}{" "}
+                            {compareBikes[0].year}
+                          </TableCell>
+                          <TableCell>
+                            {compareBikes[1].brand}{" "}
+                            {compareBikes[1].year}
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            {compareBikes[0].cc} CC
+                          </TableCell>
+                          <TableCell>{compareBikes[1].cc} CC</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            {compareBikes[0].pricePerHour}/hr
+                          </TableCell>
+                          <TableCell>{compareBikes[1].pricePerHour}/hr</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
                   </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -128,7 +129,7 @@ const Bikes = () => {
           </AlertDialog>
         )}
         <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
-          {showBikes?.map((item: any) => (
+          {showBikes?.slice((page - 1) * 8, page * 8)?.map((item: any) => (
             <>
               <BikeCard compareBtn={compare} bikeData={item} />
             </>
@@ -136,7 +137,7 @@ const Bikes = () => {
         </div>
 
         <div className="pagination mt-7">
-          <BikesPagination />
+          <BikesPagination total={showBikes?.length || 1} />
         </div>
       </div>
     </>

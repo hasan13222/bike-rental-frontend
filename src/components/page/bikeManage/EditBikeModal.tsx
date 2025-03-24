@@ -15,7 +15,7 @@ export default function EditBikeModal({bikeId}:any) {
     <Popover onOpenChange={(open) => dispatch(changeUpdateBikeModal(open + ""))}
     open={updateBikeModalOpen === "close" ? false : undefined}>
       <PopoverTrigger asChild>
-        <Button variant="outline">Edit</Button>
+        <Button className="bg-yellow-500">Edit</Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="grid gap-4">

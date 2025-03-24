@@ -15,6 +15,7 @@ const bikeApi = baseApi.injectEndpoints({
         url: `/api/bikes/${bikeId}`,
         method: "GET",
       }),
+      providesTags: ["singleBike"],
     }),
     createBike: builder.mutation({
       query: (payload) => ({
@@ -36,7 +37,7 @@ const bikeApi = baseApi.injectEndpoints({
             'Authorization': `Bearer ${payload.token}`
         }
       }),
-      invalidatesTags: ["bikes"]
+      invalidatesTags: ["bikes", "singleBike"]
     }),
     deleteBike: builder.mutation({
       query: (payload) => ({

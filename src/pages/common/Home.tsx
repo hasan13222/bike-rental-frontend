@@ -94,7 +94,7 @@ const Home = () => {
         <ScrollAnimation animateIn="fadeIn">
           <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
             {data?.data?.map((item: any, i: number) => {
-              if (i < 8) {
+              if (i < 4) {
                 return (
                   <>
                     <BikeCard bikeData={item} />
@@ -176,7 +176,7 @@ const Home = () => {
         <ScrollAnimation animateIn="fadeIn">
           <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
             {featuredbikes?.data?.map((item: any, i: number) => {
-              if (i < 8) {
+              if (i < 4) {
                 return (
                   <>
                     <BikeCard bikeData={item} />
