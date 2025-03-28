@@ -1,4 +1,5 @@
 // import BookingStartForm from "@/components/form/BookingStartForm";
+import BikeCard from "@/components/page/home/BikeCard";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -7,12 +8,15 @@ import {
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { useCheckLoginQuery } from "@/redux/api/auth/authApi";
-import { useGetSingleBikeQuery } from "@/redux/api/bike/bikeApi";
+import { useGetBikesQuery, useGetSingleBikeQuery } from "@/redux/api/bike/bikeApi";
 import { useStartRideMutation } from "@/redux/api/booking/bookingApi";
 import { useTakePaymentMutation } from "@/redux/api/booking/paymentApi";
+import { useGetBikeReviewsQuery } from "@/redux/api/review/reviewApi";
 import { CustomError } from "@/types/errorType";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import { FaRegStar, FaStar } from "react-icons/fa";
+import Rating from "react-rating";
 import { useNavigate, useParams } from "react-router-dom";
 
 const SingleBike = () => {
@@ -23,6 +27,11 @@ const SingleBike = () => {
     isError: isSingleBikeError,
     error: singleBikeError,
   } = useGetSingleBikeQuery(bikeId);
+
+
+  const { data: bikes } = useGetBikesQuery({})
+  const { data: bikeReviews } = useGetBikeReviewsQuery(bikeId);
+
   const { toast } = useToast();
   const stripe = useStripe();
   const elements = useElements();
@@ -197,7 +206,7 @@ const SingleBike = () => {
                 </PopoverContent>
               </Popover>
             </div>}
-            
+
           </div>
         </div>
       </div>
@@ -245,6 +254,47 @@ const SingleBike = () => {
           </p>
         </div>
       )}
+
+      <div className="container py-8">
+        <h2 className="scroll-m-20 pb-5 text-3xl font-semibold tracking-tight first:mt-0">
+          Reviews
+        </h2>
+
+        {bikeReviews?.data?.map((item: any) => (
+          <div className="flex gap-2 border-b pb-4 mb-4">
+            <img className="h-14 object-contain rounded-full" src="/avatar.png" alt="avatar" />
+            <div>
+              <h3 className="font-semibold text-xl">{item.userId.name}</h3>
+              <Rating
+                placeholderRating={item.rating}
+                emptySymbol={<FaRegStar className="text-primary" />}
+                placeholderSymbol={<FaStar className="text-primary" />}
+                fullSymbol={<FaStar className="text-primary" />}
+                readonly={true}
+              />
+              <p>{item.review}</p>
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+
+      {/* reviews */}
+      <div className="container pb-8">
+        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+          Related Bikes
+        </h2>
+        <div className="bike__items grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-5">
+          {bikes?.data?.filter((item: any) => (item?.year - data?.data?.year) < 3 && (item?.year - data?.data?.year) > -3).map((item: any) => {
+            return (
+              <>
+                <BikeCard bikeData={item} />
+              </>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 };

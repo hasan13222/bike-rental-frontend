@@ -41,22 +41,24 @@ export default function MyRides() {
     const [addReview, { isLoading: isPending }] = useCreateReviewMutation();
 
     async function addReviewHandler() {
-        if(!review || !rating){
+        if (!review || !rating) {
             toast({ title: "please give rating and review" })
             return;
-        }        
+        }
         setAlertOpen("close");
-        const newReview = { rating, review, userId: userData?.data?.id, bookingId, bikeId }
-        const addedReview = await addReview({token: userData?.data?.token, newReview});
+        const newReview = { rating, review, userId: userData?.data?.id, bookingId, bikeId };
+        console.log(newReview)
+        const addedReview = await addReview({ token: userData?.data?.token, newReview });
         if (addedReview?.data) {
-            toast({ title: addedReview?.data?.message })
-        }else{
-            toast({title: (addedReview?.error as CustomError)?.data?.message})
+            toast({ title: addedReview?.data?.message });
+            setRating(0);
+        } else {
+            toast({ title: (addedReview?.error as CustomError)?.data?.message });
+            setRating(0);
         }
         setBikeId("");
         setBookingId("");
         setReview("");
-        setRating(0);
     }
 
     function reviewDialogOpener(bkId: string, bkgId: string) {

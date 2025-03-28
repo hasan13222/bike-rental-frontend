@@ -35,7 +35,7 @@ export default function BikesPagination({ total }: { total: number }) {
         <PaginationItem className="cursor-pointer">
           <PaginationPrevious onClick={prevPageHandler} />
         </PaginationItem>
-        {Array(Math.ceil(total/8)).fill(1)?.map((item, index) => (
+        {Array(Math.ceil(total/8)).fill(1)?.map((_, index) => (
           <>
             <PaginationItem className="cursor-pointer">
               <PaginationLink onClick={() => pageHandler(index)} isActive={index+1 === page}>{index+1}</PaginationLink>
